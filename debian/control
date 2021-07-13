@@ -27,7 +27,6 @@ Build-Depends:
  python2,
  python-cheetah,
  python-pkg-resources,
- python-requests,
  python-subprocess32,
  python-typing,
  python-yaml,
