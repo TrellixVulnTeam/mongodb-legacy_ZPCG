@@ -1,0 +1,10 @@
+Description: Add version information about this tarball
+Author: Dimitri John Ledkov <xnox@ubuntu.com>
+
+--- /dev/null
++++ mongodb-3.6.9+really3.6.8+90~g8e540c0b6d/version.json
+@@ -0,0 +1,4 @@
++{
++    "githash": "8e540c0b6db93ce994cc548f000900bdc740f80a",
++    "version": "3.6.8"
++}

@@ -1,0 +1,14 @@
+Description: Add missing cxxabi.h include.
+Author: Dimitri John Ledkov <xnox@ubuntu.com>
+
+
+--- mongodb-3.6.9+really3.6.8+90~g8e540c0b6d.orig/src/mongo/util/heap_profiler.cpp
++++ mongodb-3.6.9+really3.6.8+90~g8e540c0b6d/src/mongo/util/heap_profiler.cpp
+@@ -46,6 +46,7 @@
+ 
+ #include <dlfcn.h>
+ #include <execinfo.h>
++#include <cxxabi.h>
+ 
+ //
+ // Sampling heap profiler

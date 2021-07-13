@@ -1,0 +1,2 @@
+debian/tmp/usr/bin/mongo
+debian/tmp/usr/bin/mongoperf

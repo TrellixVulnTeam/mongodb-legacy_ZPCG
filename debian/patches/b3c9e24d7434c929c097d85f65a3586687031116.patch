@@ -1,0 +1,22 @@
+From b3c9e24d7434c929c097d85f65a3586687031116 Mon Sep 17 00:00:00 2001
+From: Mathias Stearn <mathias@10gen.com>
+Date: Mon, 26 Mar 2018 11:27:58 -0400
+Subject: [PATCH] SERVER-33508 Fix compile with boost-1.66
+
+---
+ src/mongo/executor/network_interface_mock_test.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/mongo/executor/network_interface_mock_test.cpp b/src/mongo/executor/network_interface_mock_test.cpp
+index b1a2e4edff2..59c33e1fc82 100644
+--- a/src/mongo/executor/network_interface_mock_test.cpp
++++ b/src/mongo/executor/network_interface_mock_test.cpp
+@@ -143,7 +143,7 @@ TEST_F(NetworkInterfaceMockTest, ConnectionHook) {
+         [&](const HostAndPort& remoteHost) {
+             makeRequestCalled = true;
+             hostCorrectForRequest = (remoteHost == testHost());
+-            return boost::make_optional<RemoteCommandRequest>(expectedRequest);
++            return boost::make_optional(expectedRequest);
+         },
+         [&](const HostAndPort& remoteHost, RemoteCommandResponse&& response) {
+             handleReplyCalled = true;

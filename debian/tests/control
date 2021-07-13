@@ -1,0 +1,2 @@
+Tests: mongod basic
+Depends: mongodb-server, mongodb-clients

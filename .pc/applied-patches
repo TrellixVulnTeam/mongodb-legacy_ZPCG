@@ -1,0 +1,11 @@
+hardened-build.patch
+fix-wt-checksum-on-arm64
+disable-hw-crc32-on-arm64-s390x.patch
+fix-ftbfs-with-gcc-7.patch
+SERVER-34117-skip-dns-tests.patch
+strip-test-binaries.patch
+168c8d65556ab18b05e33b5f4006d1184c30f8f7.patch
+b3c9e24d7434c929c097d85f65a3586687031116.patch
+add-tls13-counter.patch
+add-3.6.8+90~g8e540c0b6d-version.json.patch
+missing-include.patch

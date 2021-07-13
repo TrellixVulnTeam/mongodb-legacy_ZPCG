@@ -1,0 +1,13 @@
+Description: Add missing tls13 counter
+Author: Dimitri John Ledkov <xnox@ubuntu.com>
+
+--- mongodb-3.6.8.orig/src/mongo/util/net/ssl_manager.h
++++ mongodb-3.6.8/src/mongo/util/net/ssl_manager.h
+@@ -108,6 +108,7 @@ struct TLSVersionCounts {
+     AtomicInt64 tls10;
+     AtomicInt64 tls11;
+     AtomicInt64 tls12;
++    AtomicInt64 tls13;
+ 
+     static TLSVersionCounts& get();
+ };
