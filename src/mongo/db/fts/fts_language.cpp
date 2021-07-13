@@ -96,6 +96,7 @@ MONGO_INITIALIZER_GROUP(FTSAllLanguagesRegistered, MONGO_NO_PREREQUISITES, MONGO
 // - language alias
 //
 #define MONGO_FTS_LANGUAGE_LIST(MONGO_FTS_LANGUAGE_DECL)    \
+    MONGO_FTS_LANGUAGE_DECL(Czech, "czech", "cz")           \
     MONGO_FTS_LANGUAGE_DECL(Danish, "danish", "da")         \
     MONGO_FTS_LANGUAGE_DECL(Dutch, "dutch", "nl")           \
     MONGO_FTS_LANGUAGE_DECL(English, "english", "en")       \
@@ -108,6 +109,7 @@ MONGO_INITIALIZER_GROUP(FTSAllLanguagesRegistered, MONGO_NO_PREREQUISITES, MONGO
     MONGO_FTS_LANGUAGE_DECL(Portuguese, "portuguese", "pt") \
     MONGO_FTS_LANGUAGE_DECL(Romanian, "romanian", "ro")     \
     MONGO_FTS_LANGUAGE_DECL(Russian, "russian", "ru")       \
+    MONGO_FTS_LANGUAGE_DECL(Slovak, "slovak", "sk")         \
     MONGO_FTS_LANGUAGE_DECL(Spanish, "spanish", "es")       \
     MONGO_FTS_LANGUAGE_DECL(Swedish, "swedish", "sv")       \
     MONGO_FTS_LANGUAGE_DECL(Turkish, "turkish", "tr")
@@ -175,6 +177,9 @@ MONGO_INITIALIZER_WITH_PREREQUISITES(FTSRegisterLanguageAliases, ("FTSAllLanguag
 //
 
 MONGO_FTS_LANGUAGE_DECLARE(languageNoneV1, "none", TEXT_INDEX_VERSION_1);
+MONGO_FTS_LANGUAGE_DECLARE(languageCzV1, "cz", TEXT_INDEX_VERSION_1);
+MONGO_FTS_LANGUAGE_DECLARE(languageCzkV1, "czk", TEXT_INDEX_VERSION_1);
+MONGO_FTS_LANGUAGE_DECLARE(languageCzechV1, "czech", TEXT_INDEX_VERSION_1);
 MONGO_FTS_LANGUAGE_DECLARE(languageDaV1, "da", TEXT_INDEX_VERSION_1);
 MONGO_FTS_LANGUAGE_DECLARE(languageDanV1, "dan", TEXT_INDEX_VERSION_1);
 MONGO_FTS_LANGUAGE_DECLARE(languageDanishV1, "danish", TEXT_INDEX_VERSION_1);
@@ -218,6 +223,9 @@ MONGO_FTS_LANGUAGE_DECLARE(languageRuV1, "ru", TEXT_INDEX_VERSION_1);
 MONGO_FTS_LANGUAGE_DECLARE(languageRumV1, "rum", TEXT_INDEX_VERSION_1);
 MONGO_FTS_LANGUAGE_DECLARE(languageRusV1, "rus", TEXT_INDEX_VERSION_1);
 MONGO_FTS_LANGUAGE_DECLARE(languageRussianV1, "russian", TEXT_INDEX_VERSION_1);
+MONGO_FTS_LANGUAGE_DECLARE(languageSkV1, "sk", TEXT_INDEX_VERSION_1);
+MONGO_FTS_LANGUAGE_DECLARE(languageSvkV1, "svk", TEXT_INDEX_VERSION_1);
+MONGO_FTS_LANGUAGE_DECLARE(languageSlovakV1, "slovak", TEXT_INDEX_VERSION_1);
 MONGO_FTS_LANGUAGE_DECLARE(languageSpaV1, "spa", TEXT_INDEX_VERSION_1);
 MONGO_FTS_LANGUAGE_DECLARE(languageSpanishV1, "spanish", TEXT_INDEX_VERSION_1);
 MONGO_FTS_LANGUAGE_DECLARE(languageSvV1, "sv", TEXT_INDEX_VERSION_1);
