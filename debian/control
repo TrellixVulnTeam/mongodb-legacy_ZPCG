@@ -22,7 +22,6 @@ Build-Depends:
  libreadline-dev,
  libsnappy-dev,
  libssl-dev,
- libstemmer-dev,
  libyaml-cpp-dev,
  python-cheetah,
  python-pkg-resources,
