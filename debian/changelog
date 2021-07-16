@@ -1,0 +1,1046 @@
+mongodb (1:3.6.3-0ubuntu1.1) bionic; urgency=medium
+
+  * d/p/SERVER-36951-applyOps-createIndexes-without-uuid.patch: fix restoring
+    of a database backup when applyOps has a createIndexes command without a
+    UUID. (LP: #1821391)
+
+ -- Andreas Hasenack <andreas@canonical.com>  Fri, 22 Mar 2019 16:11:02 -0300
+
+mongodb (1:3.6.3-0ubuntu1) bionic; urgency=medium
+
+  * New upstream release (LP: #1761807).
+  * d/watch: update.
+  * d/upstream/signing-key.asc: update.
+  * Drop d/p/CVE-2016-6494.patch: no longer needed as fixed upstream by
+    use of open(2) with S_IRUSR | S_IWUSR.
+  * Drop d/p/asio-openssl-1.1-support.patch: this backport is no longer
+    required as upstream successfully builds directly against OpenSSL
+    1.1 now.
+  * d/p/fix-ftbfs-with-gcc-7.patch: refresh to remove fuzz.
+  * d/copyright: update.
+  * d/control: build dependency changes:
+    - Add new dependencies required for a successful build
+      (libmongoc-dev, python-cheetah, python-pkg-resources,
+      python-requests, python-typing).
+    - Drop python (not required directly).
+  * d/p/SERVER-34117-skip-dns-tests.patch: disable some tests that require
+    network access.
+  * d/p/strip-test-binaries.patch: strip test binaries to reduce build size to
+    within Launchpad's limit.
+
+ -- Robie Basak <robie.basak@ubuntu.com>  Wed, 11 Apr 2018 13:45:22 +0100
+
+mongodb (1:3.4.14-3ubuntu2) bionic; urgency=medium
+
+  * Update breaks+replaces to the correct version (LP: #1762915)
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Wed, 11 Apr 2018 16:59:06 +0200
+
+mongodb (1:3.4.14-3ubuntu1) bionic; urgency=low
+
+  * Merge from Debian unstable.  Remaining changes:
+    - Rework Breaks+Replaces for the bionic version, this can be dropped
+      once bionic is out.
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Tue, 10 Apr 2018 12:38:47 +0200
+
+mongodb (1:3.4.14-3) unstable; urgency=medium
+
+  * d/control: correct mongodb-server-core Breaks/Replaces (Closes: #893893)
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Fri, 23 Mar 2018 17:59:10 +0200
+
+mongodb (1:3.4.14-2) unstable; urgency=medium
+
+  * Fix altivec-related FTBFS on ppc64el
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Fri, 23 Mar 2018 14:52:30 +0200
+
+mongodb (1:3.4.14-1) unstable; urgency=medium
+
+  * New upstream stable release (Closes: #882643)
+  * Drop/Refresh patches
+    + Drop patches for architectures no longer built
+      - 0001-Create-kfreebsd-like-linux-in-most-respects.patch
+      - 0002-kfreebsd-has-dev-urandom.patch
+      - 0012-support-gnu.patch
+      - use-mmapv1-on-i386
+    + Drop obsolete/merged patches
+      - fix-boost-1.62-build.patch
+      - fix-gcc-6-ftbfs.patch
+      - use-std::regex.patch
+      - fix-build-with-openssl-1.1.patch
+      - fix-mozjs-38-segfaults.patch
+      - arm64-48bit-va-compat.patch
+      - scons-3.0-compat.patch
+    + Refresh fix-ftbfs-with-gcc-7.patch
+  * Ship the mongod and mongos binaries in mongodb-server-core. This allows
+    the use of special-purpose Mongo instances without the need for a
+    system-wide setup (Closes: #893621). Thanks to Robie Basak!
+  * Upload to unstable, merging all experimental development history
+  * Switch Vcs-* URLs to salsa.d.o
+  * Bump Standards-Version to 4.1.3; no changes needed
+  * Bump dh compat to 11
+    + Use dh_missing instead of dh_install --list-missing
+    + Use dh_installsystemd instead of dh_systemd_enable
+  * d/rules: do not pass --parallel to dh, this is now done by default
+  * d/watch: switch URL to https://
+  * d/mongodb.conf: rename oplog to diaglog (Closes: #892955)
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Thu, 22 Mar 2018 14:18:12 +0200
+
+mongodb (1:3.4.7-1ubuntu4) bionic; urgency=medium
+
+  * d/p/disable-broken-ppc64el-altivec: disable buggy AltiVec optimisations on
+    ppc64el for now to fix FTBFS until upstream has a proper fix (LP:
+    #1758116). This may result in a performance regression on ppc64el only,
+    which is tracked at LP 1758118.
+
+ -- Robie Basak <robie.basak@ubuntu.com>  Thu, 22 Mar 2018 12:49:32 +0000
+
+mongodb (1:3.4.7-1ubuntu3) bionic; urgency=medium
+
+  * Break out mongodb-server-core to provide binaries only as a separate
+    package (LP: #1756432). This allows users (such as Juju) to use the mongodb
+    binaries only for use in non-system-wide databases without conflict with
+    what a user on the same system may be doing. This follows the same pattern
+    already established with MySQL and MariaDB packaging.
+
+ -- Robie Basak <robie.basak@ubuntu.com>  Tue, 13 Feb 2018 11:35:01 +0000
+
+mongodb (1:3.4.7-1ubuntu2) bionic; urgency=high
+
+  * No change rebuild against openssl1.1.
+
+ -- Dimitri John Ledkov <xnox@ubuntu.com>  Tue, 06 Feb 2018 17:54:53 +0000
+
+mongodb (1:3.4.7-1ubuntu1) bionic; urgency=medium
+
+  * d/p/major-minor-sysmacros: fix FTBFS following glibc update. Closes:
+    #882643.
+
+ -- Robie Basak <robie.basak@ubuntu.com>  Fri, 15 Dec 2017 17:36:26 +0000
+
+mongodb (1:3.4.7-1build1) bionic; urgency=medium
+
+  * No-change rebuild for boost soname change.
+
+ -- Matthias Klose <doko@ubuntu.com>  Thu, 26 Oct 2017 17:20:37 +0000
+
+mongodb (1:3.4.7-1) experimental; urgency=medium
+
+  * New upstream bugfix release; see
+    https://docs.mongodb.com/manual/release-notes/3.4/
+  * Refresh disable-hw-crc32-on-arm64-s390x.patch
+  * Bump Standards to 4.0.1; no changes needed
+  * Bump compat to 10
+  * New patch to fix FTBFS with GCC 7 (Closes: #853556)
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Sun, 13 Aug 2017 23:25:53 -0400
+
+mongodb (1:3.4.1-3) experimental; urgency=medium
+
+  * s390x: do not attempt to build the asm CRC32 implementation; fixes FTBFS
+  * d/copyright: adjust src/third_party/* paths
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Fri, 23 Dec 2016 23:40:35 +0200
+
+mongodb (1:3.4.1-2) experimental; urgency=medium
+
+  * Disable hardware-assisted CRC32 on arm64 and s390x. This fixes FTBFS on
+    these architectures.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Fri, 23 Dec 2016 20:59:49 +0200
+
+mongodb (1:3.4.1-1) experimental; urgency=medium
+
+  * New upstream stable series
+    + d/watch: look for 3.4 stable releases
+    + Update upstream's signing key for 3.4
+    + Drop fix-boost-1.60-build.patch; applied upstream
+    + Refresh remaining patches
+    + B-D on libboost-iostreams-dev
+  * Upload to experimental
+  * New patches:
+    + Use std::regex instead of boost::regex in mongo shell (fixes FTBFS with
+      Debian's boost and C++11)
+  * Also build for s390x (Closes: #848298)
+  * Drop i386 builds; i386 has long been deprecated upstream and support has
+    been essentially removed in 3.4.
+  * Use tcmalloc on ppc64el and arm64 as well
+  * Do not ship mongosniff, as it is no longer built by the mongodb source
+  * d/changelog: restore the 2.6.12-3 entry (Closes: #848305)
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Fri, 23 Dec 2016 14:57:21 +0200
+
+mongodb (1:3.2.17-1) unstable; urgency=medium
+
+  * New upstream stable release; see
+    https://docs.mongodb.com/manual/release-notes/3.2/ for notable changes
+    since 3.2.16.
+  * Backport upstream fix to allow building with SCons 3.0.
+  * Remove obsolete upstart script.
+  * Bump Standards to 4.1.1; no changes needed.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Sun, 08 Oct 2017 10:41:09 +0300
+
+mongodb (1:3.2.16-1) unstable; urgency=medium
+
+  * New upstream stable release; see
+    https://docs.mongodb.com/manual/release-notes/3.2/ for notable changes
+    since 3.2.11.
+  * Fix mongod NULL pointer dereference by disabling GCC optimizations for
+    mozjs (Closes: #876755)
+  * mongodb.service: raise resource limits.
+    Thanks to Joshua Powers <josh.powers@canonical.com> (Closes: #857969)
+  * mongodb.service: start after network.target (Closes: #864407)
+  * mongodb-server.postinst: only create the mongodb user when it doesn't
+    exist (Closes: #858903)
+  * Switch to OpenSSL 1.1 (Closes: #859232)
+    + Patch upstream source to revert breakage introduced in 3.2.16.
+    + Backport OpenSSL 1.1 support for ASIO.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Thu, 28 Sep 2017 01:13:37 +0300
+
+mongodb (1:3.2.11-4) unstable; urgency=medium
+
+  * Bump Standards to 4.1.0; no changes needed
+  * Fix segfault/FTBFS on ARM64 with 48-bit virtual addresses (Closes: #871906)
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Mon, 25 Sep 2017 23:50:52 +0300
+
+mongodb (1:3.2.11-3) unstable; urgency=medium
+
+  * d/changelog: restore the 2.6.12-3 entry (Closes: #848305)
+  * Fix FTBFS with GCC 7 (Closes: #853556)
+  * Bump compat to 10
+    + B-D on debhelper (>= 10)
+    + Remove --with=systemd from dh invocations
+  * Bump Standards to 4.0.1; no changes needed
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Fri, 11 Aug 2017 14:37:37 -0400
+
+mongodb (1:3.2.11-2) unstable; urgency=medium
+
+  * Drop armhf builds; currently FTBFS and is unsupported upstream
+    (Closes: #836435)
+  * Set MMAPv1 as the default storage engine on i386; fixes FTBFS on i386
+  * Fix ARM64 detection in WT; fixes FTBFS on arm64
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Thu, 15 Dec 2016 20:04:56 +0200
+
+mongodb (1:3.2.11-1) unstable; urgency=medium
+
+  * New upstream stable release
+  * Upload to unstable
+  * mongodb-clients: recommend mongodb-tools
+  * Disable kFreeBSD and HURD builds, until we finish porting the patches from
+    earlier versions
+  * d/watch: verify upstream tarball signatures
+  * Fix build with boost 1.62; patch by NetBSD
+  * B-D on libssl1.0-dev (Closes: #828438)
+  * B-D on tzdata (Closes: #839505)
+  * Refactor DEP-8 tests
+  * Set maintainer to pkg-mongodb, move Lászlo to Uploaders and update Vcs-*
+    URLs
+  * mongodb-server: Depend on lsb-base for the initscript
+  * Use resmoke to run db and unit tests
+    + B-D on python-yaml and python-subprocess32
+  * d/copyright: drop files removed upstream
+  * mongodb-server: remove unused lintian override
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Thu, 15 Dec 2016 11:06:03 +0200
+
+mongodb (1:3.2.9-1) experimental; urgency=medium
+
+  * New upstream release.
+  * Fix build with Boost 1.60 by backporting upstream commit 92c3f80f.
+  * Fix FTBFS in src/mongo/base/parse_number_test.cpp with GCC 6.1.
+  * Fix FTBFS with GCC 6.1 by ignoring overflow checks as upstream's test suite
+    explicitly triggers overflows.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Fri, 02 Sep 2016 12:17:27 +0300
+
+mongodb (1:3.2.8-2) experimental; urgency=medium
+
+  * Disable wiredtiger on 32-bit systems; Wiredtiger only supports 64-bit
+    platforms.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Fri, 15 Jul 2016 15:59:41 +0300
+
+mongodb (1:3.2.8-1) experimental; urgency=medium
+
+  * New upstream release
+    + Enable wiredtiger (using the bundled copy for the time being)
+  * Upload to experimental
+  * Drop irrelevant or merged/fixed upstream patches:
+    + ppc64el patch
+    + Fix-GCC-5-FTBFS.patch
+    + fix-yaml-detection
+    + add-option-to-disable-javascript.patch
+    + disable-warnings.patch
+    + no-unused-function.patch
+    + 0006-Fix-ARM-alignment-problems.patch
+    + 0099-Pagesize-hacks.patch
+    + 0004-kfreebsd-does-not-have-sys-prctl.h.patch
+  * Refresh remaining patches
+  * scons:
+    + 'scons smoke' is gone, run smoke directly
+    + Use the new test suite arguments for scons
+  * mongodb-clients: drop binaries removed upstream
+    + Also drop manpages of missing binaries
+  * Remove v8 B-D, mongodb now uses a bundled greasemonkey copy
+  * B-D on zlib1g-dev and libboost-regex-dev
+  * Use system valgrind
+  * d/copyright:
+    + update for 3.2
+    + fix zlib file matching
+  * d/watch: search for stable 3.2 releases
+  * lintian:
+    + relax source override for utils.js to allow long lines of any
+      length (and not just 565 characters)
+    + remove unused overrides for PCRE
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Thu, 14 Jul 2016 16:42:32 +0300
+
+mongodb (1:2.6.12-3) unstable; urgency=high
+
+  * Fix CVE-2016-6494 , prevent group and other access to .dbshell
+    (closes: #832908).
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.org>  Mon, 08 Aug 2016 21:56:32 +0000
+
+mongodb (1:2.6.12-2) unstable; urgency=medium
+
+  * Do not use tcmalloc on ppc64el (fixes FTBFS on ppc64el).
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Thu, 14 Jul 2016 15:13:57 +0300
+
+mongodb (1:2.6.12-1) unstable; urgency=medium
+
+  [ Apollon Oikonomopoulos ]
+  * New upstream release
+  * Upload to unstable
+  * Fix FTBFS with GCC6 (Closes: #811606)
+
+  [ Laszlo Boszormenyi ]
+  * Bump standards to 3.9.8; no changes needed
+  * Refresh hardened-build.patch
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Wed, 13 Jul 2016 12:38:13 +0300
+
+mongodb (1:2.6.11-1) experimental; urgency=medium
+
+  * New upstream release (closes: #748490).
+  * Drop patches merged upstream:
+    + 0003-All-platforms-but-Windows-find-hash-in-std-tr1.patch
+    + 0005-ARM-support-for-ASM-operations-in-MongoDB.patch
+    + 0008-Use-system-libstemmer.patch
+    + 0010-fix-integer-signs.patch
+    + 0011-Use-a-signed-char-to-store-BSONType-enumerations.patch
+    + 0013-pymongo.patch
+  * Drop 0007-Use-TIME_UTC_-macro.patch: essentially no-op with Jessie's boost
+    version.
+  * Drop 0009-ignore-unused-local-typedefs.patch: it only patches v8's
+    SConstruct for 2.6.11, but we use the system's v8 library anyway.
+  * Replace no-unused-variable.patch with Ubuntu's version, which also
+    specifies the (required) -Wno-maybe-uninitialized option.
+  * Refresh remaining patches.
+  * d/control:
+    + Add myself to Uploaders.
+    + Remove ancient g++ version B-D.
+    + Move adduser from Pre-Depends to Depends.
+    + Use HTTPS for all URLs.
+    + Remove XS-Testsuite: autopkgtest; it is added automatically.
+    + Drop the mongodb-dev binary package. The C++ client library is now
+      developed separately from the mongo database server.
+    + Lower libboost-dev B-D version requirement to (>> 1.50) to ease backports.
+    + Remove the libsnappy-dev B-D version restriction.
+  * d/rules: various fixes:
+    + Replace the individual --use-system-x scons arguments with a
+      single --use-system-all.
+    + Create -dbgsym packages by default, can be disabled using
+      DEB_BUILD_OPTIONS=nodbgsym (Warning: -dbgsym packages are about 1GB big
+      in total).
+    + lint: use filter instead of findstring.
+    + Really pass the hardening flags to scons through environment variables;
+      introduced a new patch for SConstruct.
+    + Honour the nocheck build option.
+    + Use dh_install --list-missing.
+    + Move dh_clean handling to debian/clean and override dh_auto_clean
+      instead.
+    + Use a dedicated override for dh_systemd_enable.
+  * Use system YAML:
+    + d/control: B-D on libyaml-cpp-dev
+    + Include a patch from Ubuntu fixing yaml-cpp detection.
+  * tests: update basic1.js' location.
+  * mongodb.service: specify RuntimeDirectory and RuntimeDirectoryMode to have
+    systemd create /run/mongodb.
+  * upstart: create /run/mongodb
+  * mongodb-server.postinst:
+    + Do not create /run/mongodb on installation; this is a
+      runtime directory created by the initscript, the systemd unit and the
+      upstart job.
+    + Use dpkg-statoverride to set directory permissions. Also do not
+      create /var/lib/mongodb and /var/log/mongodb, they are already created
+      using dh_installdirs.
+    + Refactor user creation; create the mongodb system user with
+      mongodb as primary group and with disabled login and shell.
+  * Drop mongodb-server.{prerm,postrm}; they are essentially dh_make
+    boilerplate.
+  * mongodb.service: source /etc/default/mongodb and use $CONF and $DAEMON_OPTS.
+  * Remove obsolete mongodb maintainer scripts, initscript, upstart job and
+    dirs.
+  * Remove old xulrunner-related lintian overrides.
+  * Remove duplicate manpages from debian/.
+  * Enable arm64 and ppc64el builds (closes: #791935):
+    + Add a patch from Ubuntu to allow disabling javascript during build.
+    + Disable javascript for arm64 and ppc64el builds, as V8 is not available
+      on these architectures.
+    + d/control: mark packages additionally as arm64 and ppc64el.
+    + Drop the mongo shell from the arm64 and ppc64el packages, as it is
+      broken without scripting support.
+  * Use the tcmalloc allocator on supported architectures (amd64, i386, armhf,
+    ppc64el).
+  * Add debian/source/lintian-overrides, overriding false positive and
+    irrelevant warnings/errors.
+  * Remove debian/mongodb-clients.lintian-overrides: overrides were not used.
+  * d/copyright: convert to Format 1.0.
+  * Bump standards to 3.9.7; no changes needed.
+  * d/watch: check for 2.6 stable releases.
+  * Add NEWS entry with hints about the upgrade to 2.6.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Tue, 15 Mar 2016 14:32:18 +0000
+
+mongodb (1:2.4.14-3) unstable; urgency=low
+
+  * Fix FTBFS with newer g++ 5.2 versions (closes: #794931).
+  * Build depend on newer g++ 5.2 versions (closes: #793262).
+  * Build depend on GCC 5 transitioned snappy versions.
+  * Remove ppc64el from the packages, it doesn't have libv8-dev .
+  * Move adduser dependency to pre-depends.
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.org>  Sat, 08 Aug 2015 18:57:06 +0200
+
+mongodb (1:2.4.14-2) unstable; urgency=low
+
+  * Fix FTBFS with gcc 5.1 (closes: #778012).
+  * Update Vcs-Browser location (closes: #745341).
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.org>  Sat, 04 Jul 2015 07:10:47 +0000
+
+mongodb (1:2.4.14-1) unstable; urgency=low
+
+  * New upstream release.
+  * Remove applied patches.
+  * Specify home directory when adding mongodb user.
+
+  [ Svante Signell <svante.signell@gmail.com> ]
+  * Fix build with python-pymongo 3.0+ (closes: #786823).
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.org>  Sun, 31 May 2015 12:46:04 +0000
+
+mongodb (1:2.4.10-5) unstable; urgency=high
+
+  * Use upstream backported fix for CVE-2015-1609 (closes: #780129).
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.org>  Mon, 09 Mar 2015 21:21:24 +0000
+
+mongodb (1:2.4.10-4) unstable; urgency=high
+
+  * Backport potential information leak security fix from 2.4.11 .
+  * Backport disable SSLv3 ciphers from pre-2.4.13 to fix CVE-2014-3566 .
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.org>  Mon, 10 Nov 2014 18:24:57 +0000
+
+mongodb (1:2.4.10-3) unstable; urgency=medium
+
+  * Enable systemd unit file (closes: #767211).
+  * Update Standards-Version to 3.9.6 .
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.org>  Wed, 29 Oct 2014 22:43:27 +0000
+
+mongodb (1:2.4.10-2) unstable; urgency=low
+
+  * Enable systemd service (closes: #745674).
+  * Support NUMA configurations (closes: #714955).
+
+  [ Thomas Goirand <zigo@debian.org> ]
+  * Build with -Wno-unused-function, fixing FTBFS with gcc-4.9
+    (closes: #746887).
+
+  [ Svante Signell <svante.signell@gmail.com> ]
+  * Add support for GNU/Hurd (closes: #747586).
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.org>  Sat, 21 Jun 2014 18:34:48 +0000
+
+mongodb (1:2.4.10-1) unstable; urgency=low
+
+  * New upstream release.
+  * Sync with Ubuntu.
+
+  [ James Page <james.page@ubuntu.com> ]
+  * Enable ppc64el build (LP: #1288633):
+    - d/control: Add ppc64el to target architectures.
+    - d/control: Use google-perftools on ppc64el.
+    - d/p/0004-Support-ppc64el-builds.patch: Detect ppc64 as 64 bit platform.
+  * d/mongodb-server.mongodb.upstart: Bump nofile limit to 64000 (LP: #1283007).
+  * d/control: Use google-perftools on armhf.
+
+  [ Adam Conrad <adconrad@ubuntu.com> ]
+  * d/p/0099-Pagesize-hacks.patch: Apply some hacks for non-4k pages.
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.org>  Tue, 15 Apr 2014 13:47:02 +0000
+
+mongodb (1:2.4.9-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.org>  Thu, 16 Jan 2014 12:44:01 +0000
+
+mongodb (1:2.4.8-2) unstable; urgency=low
+
+  * Sync with Ubuntu (closes: #730203).
+
+  [ James Page <james.page@ubuntu.com> ]
+  * d/control: Enable armhf across all binary packages.
+  * d/control,tests: Add DEP-8 tests.
+  * d/p/0011-Use-a-signed-char-to-store-BSONType-enumerations.patch: Fixup
+    build failure on ARM due to missing signed'ness of char cast.
+
+  [ Rogério Brito <rbrito@ime.usp.br> ]
+  * debian/control: Add more details to the long descriptions.
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.org>  Fri, 22 Nov 2013 18:09:38 +0100
+
+mongodb (1:2.4.8-1) unstable; urgency=low
+
+  * New upstream release.
+  * Add armhf architecture to the supported build systems.
+  * Build with SSL enabled.
+  * Update Standards-Version to 3.9.5 .
+
+  [ Viktar Vauchkevich <victorenator@gmail.com> ]
+  * Add systemd support (closes: #717321).
+
+  [ James Page <james.page@ubuntu.com> ]
+  * d/copyright: Add details of MongoDB AGPL+OpenSSL license exception
+    to support continued use of MongoDB with SSL support enabled
+    (LP: #1175028).
+  * d/mongodb.conf: Add example SSL configuration options.
+  * d/mongodb-server.mongodb.upstart: Add upstart configuration.
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.org>  Wed, 13 Nov 2013 07:55:06 +0000
+
+mongodb (1:2.4.6-1) unstable; urgency=low
+
+  * New upstream release.
+  * Change package priority to optional.
+  * Update Standards-Version to 3.9.4 .
+  * Fix typedefs FTBFS with 0009-ignore-unused-local-typedefs.patch
+    (closes: #701324), thanks to James Page <james.page@ubuntu.com>
+  * Fix integer comparision FTBFS with 0010-fix-integer-signs.patch
+    (closes: #724100).
+  * Rework packaging with short debhelper format instead of cdbs.
+  * Compile with system V8 library.
+  * Move packaging to Debian servers.
+  * New maintainer (closes: #725854).
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.org>  Tue, 24 Sep 2013 12:31:11 +0000
+
+mongodb (1:2.4.5-1) unstable; urgency=critical
+
+  * new upstream release
+    https://jira.mongodb.org/browse/SERVER/fixforversion/12519
+  * CVE-2013-4650 - fix allows remote authenticated users to obtain
+    internal system privileges (Closes: #715007).
+  * CVE-2013-2132 and CVE-2013-4142 - Remotely triggered segmentation
+    fault in Javascript engine (Closes: #717173).
+  * Force use of TIME_UTC_ boost macro (Closes: #710639).
+  * Use gcc and g++ 4.7 to avoid #701324 which is still pending.
+  * Remove build directory (Closes: #715015).
+  * Currently uses embedded V8 as the one in Debian is too old.
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Wed, 17 Jul 2013 16:23:43 +0200
+
+mongodb (1:2.4.3-1) unstable; urgency=low
+
+  [ Jeff Epler ]
+  * [2a15682] kfreebsd does not have tcmalloc
+  * [b66002a] enable building packages on kfreebsd
+
+  [ Rogério Brito ]
+  * [44bbe5b] debian/control: Make mongodb arch all, instead of
+    arch-specific.
+  * [50e5786] debian/patches: Add preparation for kFreeBSD.
+  * [164ec3b] debian/patches: Regenerate the patches from patch queue.
+    Thanks to Pino Toscano and Jeff Epler (Closes: #703061)
+  * [b960dca] debian/control: Remove libpcre3 from build-depends.
+  * [8e53a7e] debian/copyright: Wrap long lines.
+  * [f33d197] debian/control: Make the mongodb metapackage arch-dependent.
+  * [1771ce7] debian/control: Set priority of packages to extra.
+  * [198f7bb] debian/control: Mark libgoogle-perftools-dev as
+    linux-amd64 linux-i386.
+  * [02826cb] debian/patches: Take some patches for ARM from Ubuntu.
+  * [bfa912d] debian/patches: Remove patch that substituted install with
+    installs.
+
+  [ Antonin Kral ]
+  * [a618d03] new upstream release
+    https://jira.mongodb.org/browse/SERVER/fixforversion/12426
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Wed, 24 Apr 2013 21:10:53 +0200
+
+mongodb (1:2.4.2-1) unstable; urgency=low
+
+  * new upstream release
+    https://jira.mongodb.org/browse/SERVER/fixforversion/12405
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Wed, 17 Apr 2013 21:52:17 +0200
+
+mongodb (1:2.4.1-3) unstable; urgency=low
+
+  [ Rogério Brito ]
+  * [ab6f6c3] debian/control: Retouch the package descriptions.
+  * [d44e3d4] d/{control,copyright}: Normalize fields with wrap-and-sort.
+  * [8287fd7] d/control: Add more build-deps to avoid use of embedded
+              libraries.
+  * [17fcb2c] d/control: Add more build-deps for compliant packages.
+  * [e239a9f] debian/rules: Use as many system libraries as possible.
+  * [3326d9e] Add a small note to README.Debian to document differences
+              from upstream.
+  * [df784a3] debian/README.source: Be more descriptive on the workflow.
+  * [d85c075] debian/patches: Add patch to use the system libstemmer library.
+  * [3f4c7e7] gitignore: Ignore quilt's state directory.
+  * [12d4a68] Add README.Debian file to mongodb-server. (Closes: #705054)
+  * [99320d3] debian/control: Augment descriptions of packages.
+  * [5d10dbf] Add bsondump to the clients package. (Closes: #679018)
+  * [434c5da] Add newer/more clients to the mongodb-clients package.
+  * [68bd0b9] Remove unused lintian overrides. (Closes: #705060)
+
+  [ Antonin Kral ]
+  * [04a8783] SERVER-5307 New man pages generated from docs by samk@10gen
+  * [2237007] lintian override for grotty bug
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Wed, 17 Apr 2013 11:58:03 +0200
+
+mongodb (1:2.4.1-2) unstable; urgency=low
+
+  * set version of mongodb-server in mongodb metapackage
+    (Closes:#703580)
+  * [d041ec8] fixes parsing of parallel option, (Closes:#702797)
+  * [348ff81] update watch file, thanks Bart, (Closes:#688781)
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Sun, 24 Mar 2013 19:13:21 +0100
+
+mongodb (1:2.4.1-1) unstable; urgency=low
+
+  * New upstream release 2.4.1
+    https://jira.mongodb.org/browse/SERVER/fixforversion/12402
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Sat, 23 Mar 2013 13:41:03 +0100
+
+mongodb (1:2.2.2-1) unstable; urgency=low
+
+  * New upstream release 2.2.2
+    https://jira.mongodb.org/browse/SERVER/fixforversion/11886
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Wed, 28 Nov 2012 09:34:58 +0100
+
+mongodb (1:2.2.0-1) unstable; urgency=low
+
+  * New upstream release 2.2.0
+    http://jira.mongodb.org/browse/SERVER/fixforversion/11496
+    http://blog.mongodb.org/post/30451575525/mongodb-2-2-released
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Wed, 29 Aug 2012 21:06:20 +0200
+
+mongodb (1:2.0.7-1) unstable; urgency=low
+
+  * New upstream release 2.0.7
+    https://jira.mongodb.org/browse/SERVER/fixforversion/11201
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Fri, 10 Aug 2012 14:58:19 +0200
+
+mongodb (1:2.0.6-1) unstable; urgency=low
+
+  * New upstream release 2.0.6
+    https://jira.mongodb.org/browse/SERVER/fixforversion/11165
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Tue, 05 Jun 2012 19:52:28 +0200
+
+mongodb (1:2.0.5-2) unstable; urgency=low
+
+  * Removed mongodb-server as dependency of mongodb-dev (Closes:#672634)
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Sun, 27 May 2012 13:00:38 +0200
+
+mongodb (1:2.0.5-1) unstable; urgency=low
+
+  * New upstream release 2.0.5
+    https://jira.mongodb.org/browse/SERVER/fixforversion/11137
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Thu, 10 May 2012 07:05:43 +0200
+
+mongodb (1:2.0.4-1) unstable; urgency=low
+
+  * New upstream release 2.0.4
+    https://jira.mongodb.org/browse/SERVER/fixforversion/11107
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Fri, 30 Mar 2012 21:41:35 +0200
+
+mongodb (1:2.0.3-2) unstable; urgency=low
+
+  * Enable journaling by default (Closes:#664080)
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Thu, 15 Mar 2012 16:48:06 +0100
+
+mongodb (1:2.0.3-1) unstable; urgency=low
+
+  * New upstream release 2.0.3
+    https://jira.mongodb.org/browse/SERVER/fixforversion/11001
+  * added debian/copat
+  * added Replaces clause from Ubuntu patch
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Thu, 01 Mar 2012 14:14:34 +0100
+
+mongodb (1:2.0.2-5) unstable; urgency=low
+
+  * Allow parallel build, patch courtesy of Andre Ferraz
+    <deferraz@terra.com.br> (Closes:#646759)
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Thu, 16 Feb 2012 10:25:06 +0100
+
+mongodb (1:2.0.2-4) unstable; urgency=low
+
+  * Move socket from /tmp to /var/run/mongodb (Closes: #658177)
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Wed, 01 Feb 2012 14:53:12 +0100
+
+mongodb (1:2.0.2-3) unstable; urgency=low
+
+  * Describe jsonArray option for mongoimport in manpage (Closes: 656444)
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Thu, 19 Jan 2012 14:11:14 +0100
+
+mongodb (1:2.0.2-2) unstable; urgency=low
+
+  * added logrotate for mongodb-server (Closes: #656065)
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Mon, 16 Jan 2012 10:46:36 +0100
+
+mongodb (1:2.0.2-1) unstable; urgency=low
+
+  * New upstream release 2.0.2
+    https://jira.mongodb.org/browse/SERVER/fixforversion/10991
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Thu, 15 Dec 2011 11:26:24 +0100
+
+mongodb (1:2.0.0-2) unstable; urgency=low
+
+  * need to reupload package to get it build on i386 which failed because of
+    cdbs error
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Sun, 25 Sep 2011 20:22:08 +0200
+
+mongodb (1:2.0.0-1) unstable; urgency=low
+
+  * New upstream release 2.0.0 (Closes: #641646)
+    http://blog.mongodb.org/post/10126837729/mongodb-2-0-released
+  * proper Spider Monkey is embedded (Closes: #637370, #572870, #631054)
+  * currently linking against system libpcre3
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Wed, 14 Sep 2011 17:09:16 +0200
+
+mongodb (1:1.8.3-1) unstable; urgency=low
+
+  * New upstream release 1.8.3
+    https://jira.mongodb.org/browse/SERVER/fixforversion/10390
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Tue, 23 Aug 2011 08:48:57 +0200
+
+mongodb (1:1.8.2-2) unstable; urgency=low
+
+  * [2e1c3ff] (Closes: #625401) ignore unused-but-set-{variable,parameter}
+  * [0e9611d] (Closes: #572870, #631054) switch to v8 as javascript engine
+  * [bbf5935] (Closes: #634484) use dbpath and logpath from config file
+    not forcing in init.d
+  * [bf8d466] update description
+  * [cbe2d99] Imported Upstream version 1.8.3
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Tue, 23 Aug 2011 08:48:17 +0200
+
+mongodb (1:1.8.2-1) unstable; urgency=low
+
+  * New upstream release 1.8.2
+    https://jira.mongodb.org/browse/SERVER/fixforversion/10263
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Sat, 18 Jun 2011 21:25:25 +0200
+
+mongodb (1:1.8.1-2) unstable; urgency=low
+
+  * Depend on libboost 1.46
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Tue, 31 May 2011 13:19:30 +0200
+
+mongodb (1:1.8.1-1) unstable; urgency=low
+
+  * Upstream 1.8.1
+    http://jira.mongodb.org/browse/SERVER/fixforversion/10260
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Thu, 07 Apr 2011 07:38:17 +0200
+
+mongodb (1:1.8.0-2) unstable; urgency=low
+
+  * return empty TERM if not set (Closes: #620910)
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Tue, 05 Apr 2011 10:21:26 +0200
+
+mongodb (1:1.8.0-1) unstable; urgency=low
+
+  * Upstream 1.8.0
+    http://blog.mongodb.org/post/3903149313/mongodb-1-8-released
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Thu, 17 Mar 2011 00:10:27 +0100
+
+mongodb (1:1.6.5-3) unstable; urgency=low
+
+  [ Jérémy Lal ]
+  * Switch to cdbs, cleanup.
+  * Use debian/gbp.conf to filter out debian/* files from upstream tarball.
+
+  [ Antonin Kral ]
+  * [ab13e0b] added Vcs-* to debian/control
+  * [eb35fc8] added Jeremy as co-maintainer
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Thu, 24 Feb 2011 08:36:10 +0100
+
+mongodb (1:1.6.5-2) unstable; urgency=low
+
+  * Clean up Boost packages in Build-Depends
+  * Add libboost-dev to mongodb-dev Depends line
+
+ -- Roberto C. Sanchez <roberto@connexer.com>  Mon, 24 Jan 2011 20:17:29 -0500
+
+mongodb (1:1.6.5-1) unstable; urgency=low
+
+  * Upstream 1.6.5
+    http://jira.mongodb.org/browse/SERVER/fixforversion/10207
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Fri, 10 Dec 2010 13:10:04 +0100
+
+mongodb (1:1.6.3-1) unstable; urgency=low
+
+  * [0ad0c09] Imported Upstream version 1.6.3
+    http://jira.mongodb.org/browse/SERVER/fixforversion/10190
+  * replica_sets slavedelay, rollback
+  * sharding optimization for larger than ram data sets
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Fri, 24 Sep 2010 19:04:25 +0200
+
+mongodb (1:1.6.2-1) unstable; urgency=low
+
+  * [90ef97f] Imported Upstream version 1.6.2
+    http://jira.mongodb.org/browse/SERVER/fixforversion/10187
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Thu, 02 Sep 2010 17:41:00 +0200
+
+mongodb (1:1.6.1-1) unstable; urgency=low
+
+  * [3b9581e] Imported Upstream version 1.6.1
+    http://jira.mongodb.org/browse/SERVER/fixforversion/10183
+  * [5866afb] updated watch file fot 1.6.x version
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Wed, 18 Aug 2010 09:33:36 +0200
+
+mongodb (1:1.6.0-1) unstable; urgency=low
+
+  * [7645618] Imported Upstream version 1.6.0
+    http://jira.mongodb.org/browse/SERVER/fixforversion/10182
+  * [7ae74af] install libs to /usr/lib not /usr/lib64
+  * [45c6766] use prefix and smokedbprefix
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Wed, 11 Aug 2010 13:19:25 +0200
+
+mongodb (1:1.4.4-3) unstable; urgency=low
+
+  * [1576744] added libreadline-dev to build-deps (Closes: #589163)
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Thu, 15 Jul 2010 21:41:49 +0200
+
+mongodb (1:1.4.4-2) unstable; urgency=low
+
+  * [3bd69dc] install libs to /usr/lib not /usr/lib64 (Closes: #588557)
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Fri, 09 Jul 2010 21:26:05 +0200
+
+mongodb (1:1.4.4-1) unstable; urgency=low
+
+  * [5c6a221] Imported Upstream version 1.4.4
+  * upstream change log is at
+    http://jira.mongodb.org/browse/SERVER/fixforversion/10166
+  * [68c73c3] removed not needed files from upstream
+  * [c1546df] debian policy to 3.9.0
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Wed, 30 Jun 2010 09:32:45 +0200
+
+mongodb (1:1.4.3-2) unstable; urgency=low
+
+  * [64bca3c] Updated copyright information as requested by Richard
+    Kreuter
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Mon, 07 Jun 2010 08:27:36 +0200
+
+mongodb (1:1.4.3-1) unstable; urgency=low
+
+  * New upstream version 1.4.3
+  * Change log 1.4.3
+    http://jira.mongodb.org/browse/SERVER/fixforversion/10156
+  * added log to dirs to fix piuparts error
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Sun, 30 May 2010 10:14:05 +0200
+
+mongodb (1:1.4.2-3) unstable; urgency=low
+
+  * Clean up debian/copyright
+  * Fix various typos
+  * Generally make lintian happy
+  * Change section of mongodb-dev from database to libdevel (now matches
+    archive override file)
+  * Properly express copyrights
+  * Fix typo in manpage
+  * Remove unused lintian override.
+  * Install usr/lib64 instead of usr/lib in mongodb-dev
+  * updated watch file to actually work and report available
+    stable releases
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Tue, 11 May 2010 22:21:13 +0200
+
+mongodb (1:1.4.2-2) unstable; urgency=low
+
+  * Split single binary package into mongodb-server, mongodb-dev, and
+    mongodb-clients.
+
+ -- Roberto C. Sanchez <roberto@connexer.com>  Thu, 06 May 2010 21:20:52 -0400
+
+mongodb (1:1.4.2-1) unstable; urgency=low
+
+  * [4770a09] New upstream version 1.4.2
+  * changelog for 1.4.1
+    http://jira.mongodb.org/browse/SERVER/fixforversion/10144
+  * changelog for 1.4.2
+    http://jira.mongodb.org/browse/SERVER/fixforversion/10155
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Tue, 27 Apr 2010 19:55:04 +0200
+
+mongodb (1:1.4.0-2) unstable; urgency=low
+
+  * added Roberto C. Sanchez as co-maintainer
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Fri, 09 Apr 2010 21:40:49 +0200
+
+mongodb (1:1.4.0-1) unstable; urgency=low
+
+  * [0ca01a9] Imported Upstream version 1.4.0
+  * [76c18ea] removed not needed files for debian
+  * [c1578d9] merged changes from debianization from 1.2.4
+  * full upstream changelog
+    http://jira.mongodb.org/secure/IssueNavigator.jspa?requestId=10080
+  * upstream release notes
+    http://www.mongodb.org/display/DOCS/1.4+Release+Notes
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Thu, 25 Mar 2010 19:44:59 +0100
+
+mongodb (1:1.2.4-1) unstable; urgency=low
+
+  * [c3803a1] Imported Upstream version 1.2.4
+  * [ab4e0c8] removal of unnecessary files for Debian from upstream
+    source
+  * changelog for upstream at
+    http://jira.mongodb.org/browse/SERVER/fixforversion/10130
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Wed, 17 Mar 2010 10:18:01 +0100
+
+mongodb (1:1.2.2-4) unstable; urgency=low
+
+  * ensure removal of upstart script as upload of repacked source is failing
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Wed, 10 Mar 2010 07:29:38 +0100
+
+mongodb (1:1.2.2-3) unstable; urgency=low
+
+  * [aced2f4] removed unnecessary dependency (Closes: #572873)
+  * [ce78acd] Added call for tests to ensure correct build
+    (Closes: #570106)
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Sun, 07 Mar 2010 21:07:37 +0100
+
+mongodb (1:1.2.2-2) unstable; urgency=low
+
+  * [49232f8] removed upstart, it is buggy + not supported in Debian
+    (Closes: #572812)
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Sat, 06 Mar 2010 22:55:17 +0100
+
+mongodb (1:1.2.2-1) unstable; urgency=low
+
+  * this commit introduces stable version of MongoDB to Debian, hopefully to
+    be included in upcoming stable (Closes: #570148)
+  * [2fede57] Upstream release 1.2.2, based on commit
+    fc3d3acafc253da085f7d0cdcd91059cc9bcd8e3
+  * [d21668d] versionString changed from "1.2.3-"  to "1.2.2"
+  * [5a8e160] removed debian/files
+  * [26f3ec2] removed empty preinst
+  * [5d12fec] removed unnecessary jars
+  * [978f619] removed unused lib
+  * [7157b84] Changed maintainer of the package
+  * [0a939b5] mongo should build only on i386 and amd64
+  * [f3e7db5] generate list of manpages
+  * [bcd0d12] database section is probably more appropriate
+  * [7bec42f] clarification of licensing terms
+  * [c74fd7d] bumped standards version
+  * [357da67] merged the rest of debian changes from 1.3
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Wed, 17 Feb 2010 08:50:07 +0100
+
+mongodb (1.3.1-3) unstable; urgency=low
+
+  * [ff792f5] Reordered Build-Depends to enable automated with buildd
+    (Closes: #570072)
+  * [4d5a2c1] Added support of nostrip and debug DEB_BUILD_OPTIONS
+    (Closes: #570077)
+  * [cbc4e8b] Describe why is mongodb available for some architectures
+    only (Closes: #570076)
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Tue, 16 Feb 2010 21:59:56 +0100
+
+mongodb (1.3.1-2) unstable; urgency=low
+
+  * [efabc21] change order of build deps of xul-runner to fix sbuild
+    (Closes: #569417)
+  * [55e3c9b] added support for mongod config file
+  * [88a7135] added README.Debian with note about bind_ip set to
+    localhost
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Fri, 12 Feb 2010 09:37:23 +0100
+
+mongodb (1.3.1-1) unstable; urgency=low
+
+  * Initial release (Closes: #523937)
+  * [5cd4d87] rebuild original sources to remove debian/files
+  * [4a84263] Removed empty preinst
+  * [9698ffb] Changed maintainer of the package
+  * [4486a47] mongo should build only on i386 and amd64
+  * [5842c04] no need for creating home-dir for mongo user
+  * [f47e39e] Added missing manpages
+  * [987cd73] generate list of manpages
+  * [e3336d8] used more specific build-depeneds, thanks to Richard
+    Kreuter <richard@10gen.com>
+  * [ba8697c] removed unnecessary jars dir with its content
+  * [91fe1cf] cover licensing terms of used components
+  * [d59c02f] init.d cleanup
+  * [78d712b] cover licensing terms of utils/md5.[ch]
+  * [a696359] removed lib/ from upstream
+
+ -- Antonin Kral <A.Kral@sh.cvut.cz>  Fri, 29 Jan 2010 19:48:45 +0100
+

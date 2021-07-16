@@ -1,0 +1,6 @@
+debian/tmp-test/
+.scons/
+build/
+buildscripts/*.pyc
+site_scons/*.pyc
+site_scons/site_tools/*.pyc

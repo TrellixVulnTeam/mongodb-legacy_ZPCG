@@ -1,0 +1,2 @@
+var/lib/mongodb
+var/log/mongodb

@@ -1,0 +1,78 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# Use gcc and g++ by default, but allow setting them from the environment
+CC ?= gcc
+CXX ?= g++
+
+DEB_SCONS_OPTIONS :=
+ifneq (,$(filter debug,$(DEB_BUILD_OPTIONS)))
+	DEB_SCONS_OPTIONS := --d=DEBUGBUILD
+endif
+
+ifeq (,$(filter nodbgsym,$(DEB_BUILD_OPTIONS)))
+       DEB_SCONS_OPTIONS += --nostrip
+endif
+
+ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+       PROCS=$(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+       DEB_SCONS_OPTIONS += -j$(PROCS)
+endif
+
+COMMON_OPTIONS = --use-system-tcmalloc --use-system-pcre \
+		 --use-system-boost --use-system-snappy \
+		 --use-system-zlib --use-system-valgrind \
+		 --use-system-stemmer --use-system-yaml \
+		 --ssl $(DEB_SCONS_OPTIONS) \
+		 CC=$(CC) CXX=$(CXX)
+
+gperftools_archs = amd64 ppc64el arm64
+ifneq (,$(filter $(DEB_HOST_ARCH), $(gperftools_archs)))
+COMMON_OPTIONS += --allocator=tcmalloc
+else
+COMMON_OPTIONS += --allocator=system
+endif
+
+# Wiredtiger does not build on 32-bit systems
+ifeq (32, $(DEB_HOST_ARCH_BITS))
+COMMON_OPTIONS += --wiredtiger=off
+endif
+
+override_dh_auto_clean:
+	scons --keep-going --clean $(COMMON_OPTIONS) .
+	find $(CURDIR)/ -name "*.pyc" -delete
+	rm -rf $(CURDIR)/debian/tmp-test/
+	rm -rf $(CURDIR)/.scons/
+	rm -rf $(CURDIR)/build/
+
+override_dh_auto_build:
+	scons $(COMMON_OPTIONS) core tools
+
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
+override_dh_auto_test:
+	scons $(COMMON_OPTIONS) dbtest unittests
+	python ./buildscripts/resmoke.py --dbpathPrefix="$(CURDIR)/debian/tmp-test" --suites=dbtest,unittests
+.PHONY: override_dh_auto_test
+endif
+
+override_dh_auto_install:
+	scons $(COMMON_OPTIONS) --prefix=$(CURDIR)/debian/tmp/usr install
+
+override_dh_installsystemd:
+	dh_installsystemd -pmongodb-server --name=mongodb
+
+override_dh_installinit:
+	dh_installinit -pmongodb-server --name=mongodb
+
+override_dh_missing:
+	dh_missing --list-missing
+
+%:
+	dh $@
+
+.PHONY: override_dh_auto_clean override_dh_auto_build \
+	override_dh_auto_install override_dh_installinit \
+	override_dh_installsystemd override_dh_missing

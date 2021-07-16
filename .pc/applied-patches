@@ -1,0 +1,8 @@
+hardened-build.patch
+fix-wt-checksum-on-arm64
+disable-hw-crc32-on-arm64-s390x.patch
+fix-ftbfs-with-gcc-7.patch
+fix-altivec-endianness.patch
+SERVER-34117-skip-dns-tests.patch
+strip-test-binaries.patch
+SERVER-36951-applyOps-createIndexes-without-uuid.patch

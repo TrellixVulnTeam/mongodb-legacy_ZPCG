@@ -1,0 +1,60 @@
+Description: mongodb+srv successful test cases require DNS resolution working
+ which is not available on launchpad
+Author: Dimitri John Ledkov <xnox@ubuntu.com>
+Bug: https://jira.mongodb.org/browse/SERVER-34117
+Bug-Ubuntu: https://launchpad.net/bugs/1763119
+Last-Update: 2018-03-23
+
+--- a/src/mongo/client/mongo_uri_test.cpp
++++ b/src/mongo/client/mongo_uri_test.cpp
+@@ -627,6 +627,8 @@
+          {{"test6.test.build.10gen.cc", 12345}},
+          {},
+          success},
++/*
++Requires working internet / dns resolution
+ 
+         // Test a sample URI against each provided testing DNS entry
+         {"mongodb+srv://test1.test.build.10gen.cc/",
+@@ -692,6 +694,7 @@
+           {"authSource", "anotherDB"},
+           {"ssl", "true"}},
+          success},
++*/
+ 
+         {"mongodb+srv://test6.test.build.10gen.cc/", "", "", "", {}, {}, failure},
+ 
+@@ -771,6 +774,7 @@
+     };
+ 
+     for (const auto& test : tests) {
++	mongo::unittest::log() << "Testing URI: " << test.uri << '\n';
+         auto rs = MongoURI::parse(test.uri);
+         if (test.expectation == failure) {
+             ASSERT_FALSE(rs.getStatus().isOK()) << "Failing URI: " << test.uri;
+--- a/src/mongo/util/SConscript
++++ b/src/mongo/util/SConscript
+@@ -480,14 +480,15 @@
+     ],
+ )
+ 
+-env.CppUnitTest(
+-    target='dns_query_test',
+-    source=['dns_query_test.cpp'],
+-    LIBDEPS=[
+-        'dns_query',
+-        "$BUILD_DIR/mongo/base",
+-    ]
+-)
++# Requires DNS network resolution
++#env.CppUnitTest(
++#    target='dns_query_test',
++#    source=['dns_query_test.cpp'],
++#    LIBDEPS=[
++#        'dns_query',
++#        "$BUILD_DIR/mongo/base",
++#    ]
++#)
+ 
+ env.Library(
+     target="secure_zero_memory",
